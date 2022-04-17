@@ -22,7 +22,7 @@ core() {
 
   nvm::use $version
 
-  echo "current: $version ($(node -v))"
+  echo "current: $version"
 }
 
 run() {

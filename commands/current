@@ -19,7 +19,7 @@ core() {
     exit 0
   fi
 
-  echo "$current ($(node -v))"
+  echo "$current"
 }
 
 run() {

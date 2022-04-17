@@ -33,7 +33,7 @@ core() {
   log::success "remove ${version} success"
 
   if [ -n "$(nvm::current)" ]; then
-    echo "current: $(nvm::current) ($(node -v))"
+    echo "current: $(nvm::current)"
   fi
 }
 
