@@ -1,0 +1,25 @@
+#!/bin/bash
+
+help() {
+  echo "Use LTS Version"
+  echo ""
+  echo "Usage:"
+  echo "  zgvm lts"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  log::info "Use LTS Version $PLUGIN_NVM_NODE_LTS_VERSION"
+
+  zgvm use $PLUGIN_NVM_NODE_LTS_VERSION
+}
+
+run() {
+  core $@
+}
+
+run $@
