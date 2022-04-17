@@ -1,0 +1,31 @@
+#!/bin/bash
+
+help() {
+  echo "Usage:"
+  echo "  znvm install [version]"
+  echo ""
+  echo "Options:"
+  echo "  version    - Install Go version, default: $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local version=$1
+  if [ -z "$version" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  fi
+
+  log::info "installing $version"
+  nvm::install $version
+  log::success "install ${name} success"
+}
+
+run() {
+  core $@
+}
+
+run $@

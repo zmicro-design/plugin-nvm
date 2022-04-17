@@ -1,0 +1,126 @@
+#!/bin/bash
+
+# nvm::install install node -v
+nvm::install() {
+  vm::ensure
+  
+  # 1. get version (vm::version_parse only use in install)
+  local version=$(vm::version_parse $1)
+  # 2. get download url
+  local url=$(nvm::internal_install_get_download_url $version)
+
+  # 3. download
+  nvm::internal_install_download $version $url
+  # 4. apply local
+  nvm::internal_install_apply_local $version
+
+  # if no current, set current
+  if [ "$(nvm::current)" == "" ]; then
+    nvm::use $version
+  else
+    # apply env
+    nvm::env
+  fi
+}
+
+# nvm::internal_install_get_download_url get download url
+nvm::internal_install_get_download_url() {
+  local version=$1
+  local os=$(vm::os)
+  local arch=$(vm::arch)
+
+  # local filename=go${version}.${os}-${arch}.tar.gz
+  local filename=node-v${version}-${os}-${arch}.tar.gz
+  local tar_gz_url=${PLUGIN_NVM_NODE_SOURCE_OFFICIAL}/v${version}/$filename
+  if [ "$(net::is_google_visitable)" = "false" ]; then
+    tar_gz_url=${PLUGIN_NVM_NODE_SOURCE_CHINA}/v${version}/$filename
+  fi
+
+  # force cn mirror
+  if [ -n "${FORCE_CN}" ]; then
+    tar_gz_url=${PLUGIN_NVM_NODE_SOURCE_CHINA}/v${version}/$filename
+  fi
+
+  # custom source
+  if [ -n "${GO_SOURCE}" ]; then
+    tar_gz_url=${GO_SOURCE}/v${version}/$filename
+  fi
+
+  echo $tar_gz_url
+}
+
+nvm::internal_install_download() {
+  local version=$1
+  local tar_gz_url=$2
+  if [ -z "$version" ]; then
+    log::error "[nvm::internal_install_download] version is required"
+    exit 1
+  fi
+
+  if [ -z "$tar_gz_url" ]; then
+    log::error "[nvm::internal_install_download] tar_gz_url is required"
+    exit 1
+  fi
+
+  # 302 redirect
+  curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "302" >> /dev/null 2>&1
+  if [ "$?" = "0" ]; then
+    local location=$(curl -I $tar_gz_url 2>/dev/null | grep location | awk '{print $2}')
+
+    # fix location
+    # stackoverflow: https://stackoverflow.com/questions/70660633/curl-3-url-using-bad-illegal-format-or-missing-url-in-bash-windows
+    location=$(echo $location | sed 's/\r//g')
+
+    # 404
+    curl -I $location 2>/dev/null | head -n 1 | grep "404" >> /dev/null 2>&1
+    if [ "$?" = "0" ]; then
+      log::error "[nvm::install] invalid version: $version"
+      log::error "[nvm::install] see more version at $PLUGIN_NVM_NODE_SOURCE_OFFICIAL"
+      exit 1
+    fi
+  else
+    # 404
+    curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "404" >> /dev/null 2>&1
+    if [ "$?" = "0" ]; then
+      log::error "[nvm::install] invalid version: $version"
+      log::error "[nvm::install] see more version at $PLUGIN_NVM_NODE_SOURCE_OFFICIAL"
+      exit 1
+    fi
+  fi
+
+  # download
+  wget -c $tar_gz_url -O $PLUGIN_NVM_NODE_DOWNLOAD_TMP
+}
+
+nvm::internal_install_apply_local() {
+  local os=$(vm::os)
+  local arch=$(vm::arch)
+
+  local version=$1
+  if [ -z "$version" ]; then
+    log::error "[nvm::internal_install_apply_local] version is required"
+    exit 1
+  fi
+
+  # add prefix v*
+  version=$(vm::version_ensure_prefix_v $version)
+
+  # clean old
+  if [ -d "$PLUGIN_NVM_VERSIONS/$version" ]; then
+    sudo rm -rf $PLUGIN_NVM_VERSIONS/$version
+  fi
+  # decompress
+  sudo tar -C $PLUGIN_NVM_VERSIONS -xzf $PLUGIN_NVM_NODE_DOWNLOAD_TMP
+  # rename
+  sudo mv $PLUGIN_NVM_VERSIONS/node-${version}-${os}-${arch} $PLUGIN_NVM_VERSIONS/$version
+
+  # clean
+  sudo rm -f $PLUGIN_NVM_NODE_DOWNLOAD_TMP
+}
+
+export -f nvm::install
+
+# install internal processes
+export -f nvm::internal_install_get_download_url
+export -f nvm::internal_install_download
+export -f nvm::internal_install_apply_local

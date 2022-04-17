@@ -1,0 +1,11 @@
+#!/bin/bash
+
+nvm::list_remote() {
+  local versions=$(git ls-remote -t $PLUGIN_NVM_NODE_REPO | awk -F/ '{ print $NF }' |  awk '!/\^\{\}$/')
+  for version in ${versions[@]}; do
+    echo $version
+  done
+}
+
+
+export -f nvm::list_remote

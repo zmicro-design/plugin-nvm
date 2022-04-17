@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# nvm::current gets the current version of Go
+nvm::current() {
+  if [ ! -f "${PLUGIN_NVM_VERSION_CURRENT}" ]; then
+    echo ""
+    return
+  fi
+
+  echo $(cat $PLUGIN_NVM_VERSION_CURRENT)
+}
+
+export -f nvm::current

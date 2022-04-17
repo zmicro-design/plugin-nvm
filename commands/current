@@ -1,0 +1,29 @@
+#!/bin/bash
+
+load inquirer
+
+help() {
+  echo "Usage:"
+  echo "  znvm use"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local current=$(nvm::current)
+  if [ -z "$current" ]; then
+    echo "No version is currently set"
+    exit 0
+  fi
+
+  echo "$current ($(node -v))"
+}
+
+run() {
+  core $@
+}
+
+run $@

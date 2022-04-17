@@ -1,0 +1,48 @@
+#!/bin/bash
+
+name() {
+  local version=$(plugin::get_version $PLUGIN_NVM_NAME)
+  echo "Node Version Manager ($(color::success $version))"
+}
+
+description() {
+  echo "Node Version Manager is a tool for managing multiple Go versions."
+}
+
+usage() {
+  echo "Usage:"
+  echo "  znvm install <version>   - Install Go version"
+  echo "  znvm use <version>       - Use Go version"
+  echo "  znvm remove <version>    - Remove Go version"
+  echo "  znvm ls                  - List the Go versions installed"
+  echo "  znvm ls-remote           - List all Go versions from remote"
+  echo "  znvm current             - Show current Go version"
+  echo "  znvm exec                - Enter new shell with node -v for tmp"
+  echo "  znvm help                - Show help"
+}
+
+example() {
+  echo "Example:"
+  echo "  znvm install $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  znvm use $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  znvm remove $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  znvm ls"
+  echo "  znvm ls-remote"
+  echo "  znvm current"
+}
+
+core() {
+  name
+  echo ""
+  description
+  echo ""
+  usage
+  echo ""
+  example
+}
+
+run() {
+  core $@
+}
+
+run $@

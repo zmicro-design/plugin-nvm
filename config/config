@@ -1,0 +1,29 @@
+export PLUGIN_NVM_NAME=nvm
+
+export PLUGIN_NVM_DATA=$(plugin::get_app_data_path $PLUGIN_NVM_NAME)
+export PLUGIN_NVM_LOGS=$(plugin::get_app_logs_path $PLUGIN_NVM_NAME)
+export PLUGIN_NVM_CONFIG=$(plugin::get_app_configs_path $PLUGIN_NVM_NAME)/config
+
+export PLUGIN_NVM_VERSIONS=${PLUGIN_NVM_DATA}/versions
+export PLUGIN_NVM_VERSION_CURRENT=${PLUGIN_NVM_DATA}/current
+
+export PLUGIN_NVM_NODE_DEFAULT_VERSION=v16.14.2
+export PLUGIN_NVM_NODE_HOME=/usr/local/node
+export PLUGIN_NVM_NODE_BIN=$PLUGIN_NVM_NODE_HOME/bin
+export PLUGIN_NVM_NODE_PATH=$HOME/.node
+export PLUGIN_NVM_NODE_DOWNLOAD_TMP=/tmp/node.tar.gz
+export PLUGIN_NVM_NODE_SOURCE_OFFICIAL=https://nodejs.org/dist
+export PLUGIN_NVM_NODE_SOURCE_CHINA=https://registry.npmmirror.com/-/binary/node
+export PLUGIN_NVM_NODE_REPO=https://github.com/nodejs/node
+
+if [ ! -d "$PLUGIN_NVM_VERSIONS" ]; then
+  mkdir -p $PLUGIN_NVM_VERSIONS
+fi
+
+if [ ! -f "$PLUGIN_NVM_VERSION_CURRENT" ]; then
+  touch $PLUGIN_NVM_VERSION_CURRENT
+fi
+
+if [ ! -d "$PLUGIN_NVM_NODE_PATH" ]; then
+  mkdir -p $PLUGIN_NVM_NODE_PATH
+fi

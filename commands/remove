@@ -1,0 +1,44 @@
+#!/bin/bash
+
+load inquirer
+
+help() {
+  echo "Usage:"
+  echo "  znvm remove"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local version=$1
+
+  if [ -z "$version" ]; then
+    local availables=($(nvm::list))
+    inquirer::select "Select ?" availables version
+  fi
+
+  if [ "$(nvm::current)" = "$version" ]; then
+    local yesno=(No yes)
+    inquirer::select "Select ?" yesno confirm
+    if [ "$confirm" = "No" ]; then
+      exit 0
+    fi
+  fi
+
+  nvm::remove $version
+
+  log::success "remove ${version} success"
+
+  if [ -n "$(nvm::current)" ]; then
+    echo "current: $(nvm::current) ($(node -v))"
+  fi
+}
+
+run() {
+  core $@
+}
+
+run $@

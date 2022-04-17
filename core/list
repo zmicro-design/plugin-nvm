@@ -1,0 +1,7 @@
+#!/bin/bash
+
+nvm::list() {
+  ls $PLUGIN_NVM_VERSIONS
+}
+
+export -f nvm::list

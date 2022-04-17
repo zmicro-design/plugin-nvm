@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# nvm::exec enters a new shell with go
+nvm::exec() {
+  local go_bin_path=$PLUGIN_NVM_NODE_BIN
+  local version=$1
+  if [ -n "$version" ]; then
+    version=$(vm::version_ensure_prefix_v $version)
+    go_bin_path=$PLUGIN_NVM_VERSIONS/$version/bin
+  fi
+
+  which go >> /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    log::error "[nvm::exec] found go, you should use 'znvm use' instead of 'znvm exec'"
+    exit 1
+
+    # @TODO like python virtualenv wrapper
+    # local active=$PLUGIN_NVM_VERSIONS/$version/active
+    # if [ ! -f $active ]; then
+    #   local cleaned_path=$(echo $PATH | sed "s|$PLUGIN_NVM_NODE_HOME||g")
+    #   echo "export PATH=$go_bin_path:$cleaned_path" | sudo tee $active > /dev/null 2>&1
+    # fi
+    
+    # source $active
+    # exit 0
+  fi
+
+  export PATH=$go_bin_path:$PATH
+  go env -w GO111MODULE=on
+  go env -w GOPROXY=https://goproxy.cn,direct
+  go env -w GOPATH=$PLUGIN_NVM_NODE_PATH
+
+  exec $SHELL
+}
+
+export -f nvm::exec

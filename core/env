@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# nvm::env applys the env for node
+nvm::env() {
+  echo $PATH | grep $PLUGIN_NVM_NODE_BIN >> /dev/null 2>&1
+  if [ $? -ne 0 ]; then
+    export PATH=$PATH:$PLUGIN_NVM_NODE_BIN
+  fi
+
+  # change the default global path, use for bin, lib(node_modules)
+  # @TODO
+  npm config set prefix $PLUGIN_NVM_NODE_PATH
+
+  # Write to SHELL
+  if [ -f $HOME/.bashrc ]; then
+    cat $HOME/.bashrc | grep ZMICRO_NVM >> /dev/null 2>&1
+    if [ "$?" != "0" ]; then
+      cat << EOF >> $HOME/.bashrc
+
+# ZMICRO_NVM
+export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
+export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
+export PATH=\$NODE_HOME/bin:\$NODE_USER_HOME/bin:\$PATH
+EOF
+    fi
+  fi
+
+  if [ -f $HOME/.zshrc ]; then
+    cat $HOME/.zshrc | grep ZMICRO_NVM >> /dev/null 2>&1
+    if [ "$?" != "0" ]; then
+      cat << EOF >> $HOME/.zshrc
+
+# ZMICRO_NVM
+export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
+export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
+export PATH=\$NODE_HOME/bin:\$NODE_USER_HOME/bin:\$PATH
+EOF
+    fi
+  fi
+}
+
+export -f nvm::env
