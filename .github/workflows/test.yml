@@ -64,8 +64,8 @@ jobs:
       - name: Install NVM
         run: ./install
 
-      - name: Install Node
-        run: zmicro nvm install
+      - name: Install Node (Stable/LTS)
+        run: zmicro nvm lts
 
       - name: Show Node Version
         run: |
