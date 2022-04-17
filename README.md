@@ -6,6 +6,7 @@
 
 
 ## Installation
+
 To install the package, run:
 ```bash
 zmicro plugin install nvm
@@ -15,10 +16,10 @@ zmicro plugin install nvm
 
 ```bash
 # CURL
-curl -o- https://raw.githubusercontent.com/zcorky/zmicro/master/install | bash
+curl -o- https://raw.githubusercontent.com/zmicro-design/plugin-nvm/master/install | bash
 
 # WGET
-wget -qO- https://raw.githubusercontent.com/zcorky/zmicro/master/install | bash
+wget -qO- https://raw.githubusercontent.com/zmicro-design/plugin-nvm/master/install | bash
 ```
 
 ## Usage
