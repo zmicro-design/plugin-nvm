@@ -5,7 +5,7 @@ help() {
   echo "  znvm install [version]"
   echo ""
   echo "Options:"
-  echo "  version    - Install Go version, default: $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  version    - Install Node version, default: $PLUGIN_NVM_NODE_DEFAULT_VERSION"
 }
 
 core() {

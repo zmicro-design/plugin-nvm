@@ -11,12 +11,12 @@ description() {
 
 usage() {
   echo "Usage:"
-  echo "  znvm install <version>   - Install Go version"
-  echo "  znvm use <version>       - Use Go version"
-  echo "  znvm remove <version>    - Remove Go version"
+  echo "  znvm install <version>   - Install Node version"
+  echo "  znvm use <version>       - Use Node version"
+  echo "  znvm remove <version>    - Remove Node version"
   echo "  znvm ls                  - List the Go versions installed"
   echo "  znvm ls-remote           - List all Go versions from remote"
-  echo "  znvm current             - Show current Go version"
+  echo "  znvm current             - Show current Node version"
   echo "  znvm exec                - Enter new shell with node -v for tmp"
   echo "  znvm help                - Show help"
 }

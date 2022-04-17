@@ -30,12 +30,12 @@ Node Version Manager (v1.0.4)
 Node Version Manager is a tool for managing multiple Go versions.
 
 Usage:
-  znvm install <version>   - Install Go version
-  znvm use <version>       - Use Go version
-  znvm remove <version>    - Remove Go version
+  znvm install <version>   - Install Node version
+  znvm use <version>       - Use Node version
+  znvm remove <version>    - Remove Node version
   znvm ls                  - List the Go versions installed
   znvm ls-remote           - List all Go versions from remote
-  znvm current             - Show current Go version
+  znvm current             - Show current Node version
   znvm exec                - Enter new shell with node -v for tmp
   znvm help                - Show help
 
