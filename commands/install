@@ -21,7 +21,15 @@ core() {
 
   log::info "installing $version"
   nvm::install $version
-  log::success "install ${name} success"
+  log::success "install ${version} success"
+
+  if [ -f "$HOME/.zshrc" ]; then
+    log::success "load nodejs by reloading env with $(color::success "source $HOME/.zshrc")"
+  elif [ -f "$HOME/.bashrc" ]; then
+    log::success "load nodejs by reloading env with $(color::success "source $HOME/.bashrc")"
+  else
+    log::success "restart your shell to load nodejs"
+  fi
 }
 
 run() {
