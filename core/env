@@ -20,7 +20,7 @@ nvm::env() {
 # ZMICRO_NVM
 export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
 export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
-export PATH=\$NODE_HOME/bin:\$NODE_USER_HOME/bin:\$PATH
+export PATH=\$NODE_USER_HOME/bin:\$NODE_HOME/bin:\$PATH
 EOF
     fi
   fi
@@ -33,7 +33,7 @@ EOF
 # ZMICRO_NVM
 export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
 export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
-export PATH=\$NODE_HOME/bin:\$NODE_USER_HOME/bin:\$PATH
+export PATH=\$NODE_USER_HOME/bin:\$NODE_HOME/bin:\$PATH
 EOF
     fi
   fi
