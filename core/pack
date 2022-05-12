@@ -7,9 +7,9 @@ nvm::pack() {
   fi
 
   local version=$(nvm::current)
-  local os=$(vm::os)
-  local arch=$(os::arch)
-  local filename=node-${version}-${os}-${arch}
+  local os_name=$(os::platform)
+  local os_arch=$(os::arch)
+  local filename=node-${version}-${os_name}-${os_name}
   local filename_tgz=${filename}.tar.gz
   local node_home=${PLUGIN_NVM_VERSIONS}/${version}
 

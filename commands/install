@@ -17,6 +17,12 @@ core() {
   local version=$1
   if [ -z "$version" ]; then
     version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "default" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "lts" ]; then
+    version=$PLUGIN_NVM_NODE_LTS_VERSION
+  elif [ "$version" = "latest" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
   fi
 
   log::info "installing $version"

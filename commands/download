@@ -1,0 +1,53 @@
+#!/bin/bash
+
+load inquirer
+
+help() {
+  echo "Download Node TGZ File"
+  echo ""
+  echo "Usage:"
+  echo "  znvm download <version> <dist_dir>"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local version=$1
+  local dist_dir=$2
+  if [ -z "$version" ]; then
+    log::error "[nvm::download] version is required"
+    exit 1
+  fi
+
+  if [ -z "$dist_dir" ]; then
+    dist_dir=$PWD
+  fi
+
+  if [ "$version" = "default" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "lts" ]; then
+    version=$PLUGIN_NVM_NODE_LTS_VERSION
+  elif [ "$version" = "latest" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  fi
+
+  # @TODO resolve
+  dist_dir=$(path::resolve $dist_dir)
+
+  os::inquirer ok "confirm" "confirm to download node($version) to ${dist_dir} ?"
+  if [ "$ok" != "true" ]; then
+    log::info "CANNELED"
+    exit 0
+  fi
+
+  nvm::download $version $dist_dir
+}
+
+run() {
+  core $@
+}
+
+run $@

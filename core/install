@@ -3,6 +3,20 @@
 # nvm::install install node -v
 nvm::install() {
   vm::ensure
+
+  local node_home=${PLUGIN_NVM_VERSIONS}/${version}
+  if [ -d "$node_home" ]; then
+    # log::info "[$(timestamp)] node ${version} already installed"
+    os::inquirer ok "confirm" "node ${version} already installed, confirm to reinstall ?"
+    if [ "$ok" != "true" ]; then
+      log::info "CANNELED"
+      exit 0
+    fi
+
+    # log::info "[$(timestamp)] removing node ${version} ..."
+    # sudo rm -rf $node_home
+    log::info "[$(timestamp)] reinstalling node ${version} ..."
+  fi
   
   # 1. get version (vm::version_parse only use in install)
   local version=$(vm::version_parse $1)
@@ -25,7 +39,7 @@ nvm::install() {
 
 # nvm::internal_install_get_download_url get download url
 nvm::internal_install_get_download_url() {
-  local version=$1
+  local version=$(vm::version_parse $1)
   local os=$(vm::os)
   local arch=$(vm::arch)
 
