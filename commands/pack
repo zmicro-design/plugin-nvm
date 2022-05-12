@@ -1,0 +1,39 @@
+#!/bin/bash
+
+load inquirer
+
+help() {
+  echo "Pack Node To A TGZ File"
+  echo ""
+  echo "Usage:"
+  echo "  znvm pack [dist_dir]"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    help
+    exit 0
+  fi
+
+  local dist_dir=$1
+  if [ -z "$dist_dir" ]; then
+    dist_dir=$PWD
+  fi
+
+  # @TODO resolve
+  dist_dir=$(path::resolve $dist_dir)
+
+  os::inquirer ok "confirm" "confirm to pack node($(nvm::current)) to ${dist_dir} ?"
+  if [ "$ok" != "true" ]; then
+    log::info "CANNELED"
+    exit 0
+  fi
+
+  nvm::pack $dist_dir
+}
+
+run() {
+  core $@
+}
+
+run $@

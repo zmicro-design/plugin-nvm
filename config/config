@@ -6,13 +6,18 @@ export PLUGIN_NVM_CONFIG=$(plugin::get_app_configs_path $PLUGIN_NVM_NAME)/config
 
 export PLUGIN_NVM_VERSIONS=${PLUGIN_NVM_DATA}/versions
 export PLUGIN_NVM_VERSION_CURRENT=${PLUGIN_NVM_DATA}/current
+export PLUGIN_NVM_NODE_TAG=$PLUGIN_NVM_VERSIONS/$version/.zmicro
 
 export PLUGIN_NVM_NODE_DEFAULT_VERSION=v16.14.2
+export PLUGIN_NVM_NODE_DEFAULT_HOME=/usr/local/node
 export PLUGIN_NVM_NODE_LTS_VERSION=v16.14.2
-export PLUGIN_NVM_NODE_HOME=/usr/local/node
+
+export PLUGIN_NVM_NODE_HOME=${PLUGIN_NVM_NODE_HOME:-$PLUGIN_NVM_NODE_DEFAULT_HOME}
 export PLUGIN_NVM_NODE_BIN=$PLUGIN_NVM_NODE_HOME/bin
 export PLUGIN_NVM_NODE_PATH=$HOME/.node
+
 export PLUGIN_NVM_NODE_DOWNLOAD_TMP=/tmp/node.tar.gz
+
 export PLUGIN_NVM_NODE_SOURCE_OFFICIAL=https://nodejs.org/dist
 export PLUGIN_NVM_NODE_SOURCE_CHINA=https://registry.npmmirror.com/-/binary/node
 export PLUGIN_NVM_NODE_REPO=https://github.com/nodejs/node

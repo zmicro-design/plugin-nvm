@@ -113,6 +113,8 @@ nvm::internal_install_apply_local() {
   sudo tar -C $PLUGIN_NVM_VERSIONS -xzf $PLUGIN_NVM_NODE_DOWNLOAD_TMP
   # rename
   sudo mv $PLUGIN_NVM_VERSIONS/node-${version}-${os}-${arch} $PLUGIN_NVM_VERSIONS/$version
+  # add tag
+  echo "CreatedAt: $(timestamp)" | sudo tee $PLUGIN_NVM_NODE_TAG >> /dev/null
 
   # clean
   sudo rm -f $PLUGIN_NVM_NODE_DOWNLOAD_TMP

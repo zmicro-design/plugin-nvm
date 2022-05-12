@@ -1,0 +1,31 @@
+#!/bin/bash
+
+nvm::pack() {
+  local filedir=$1
+  if [ -z "$filedir" ]; then
+    filedir=$PWD
+  fi
+
+  local version=$(nvm::current)
+  local os=$(vm::os)
+  local arch=$(os::arch)
+  local filename=node-${version}-${os}-${arch}
+  local filename_tgz=${filename}.tar.gz
+  local node_home=${PLUGIN_NVM_VERSIONS}/${version}
+
+  if [ ! -d "$node_home" ]; then
+    log::error "[nvm::pack] node_home not found, please reinstall node with \`zmicro nvm install\`"
+    exit 1
+  fi
+
+  log::info "[$(timestamp)] packing ${filename} from ${node_home} ..."
+
+  if [ ! -d "$filedir" ]; then
+    mkdir -p $filedir
+  fi
+
+  cd $node_home
+  tar -zcvf ${filedir}/${filename_tgz} .
+}
+
+export -f nvm::pack
