@@ -19,11 +19,22 @@ vm::arch() {
   uname -m | grep "arm64" >> /dev/null 2>&1
   if [ $? == 0 ]; then
     arch=arm64
-  else
-    uname -m | grep "armv7" >> /dev/null 2>&1
-    if [ $? == 0 ]; then
-      arch=armv7l
-    fi
+    echo $arch
+    return
+  fi
+
+  uname -m | grep "armv7" >> /dev/null 2>&1
+  if [ $? == 0 ]; then
+    arch=armv7l
+    echo $arch
+    return
+  fi
+
+  uname -m | grep "aarch64" >> /dev/null 2>&1
+  if [ $? == 0 ]; then
+    arch=arm64
+    echo $arch
+    return
   fi
 
   echo $arch
