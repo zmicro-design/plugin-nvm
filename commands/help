@@ -30,6 +30,9 @@ example() {
   echo "  znvm ls"
   echo "  znvm ls-remote"
   echo "  znvm current"
+  echo "  znvm workon v16 node -v"
+  echo "  znvm workon v12 node -v"
+  echo "  znvm workon v16 npm run build"
 }
 
 core() {

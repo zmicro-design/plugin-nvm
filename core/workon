@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# nvm::workon works on specify version
+nvm::workon() {
+  local version=$1
+  local command=$2
+  if [ -z "$version" ]; then
+    log::error "[nvm::workon] version is required"
+    exit 1
+  fi
+
+  if [ "$version" = "default" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "lts" ]; then
+    version=$PLUGIN_NVM_NODE_LTS_VERSION
+  elif [ "$version" = "latest" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  fi
+
+  # search local
+  if [ "$(nvm::has_version_local $version)" = "true" ]; then
+    # log::info "run command (${command}) at version: $(color::green $version)"
+    version=$(nvm::get_version_local $version)
+  else
+    # infer latest version
+    local latest_version=$(vm::get_latest_version $version)
+    if [ "$latest_version" = "" ]; then
+      log::error "can not find version: $(color::red $version)"
+      exit 1
+    fi
+
+    version=$latest_version
+    nvm::install $version
+  fi
+
+  # apply env and run command
+  export NODE_HOME=${PLUGIN_NVM_VERSIONS}/${version}
+  export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
+  export PATH=$NODE_USER_HOME/bin:$NODE_HOME/bin:$PATH
+
+  # run command
+  eval $command
+}
+
+export -f nvm::workon

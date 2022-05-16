@@ -22,7 +22,7 @@ nvm::get_version_local() {
     exit 1
   fi
 
-  nvm::list | sort -V | tail -n 1
+  nvm::list | grep $version | sort -V | tail -n 1
 }
 
 export -f nvm::has_version_local
