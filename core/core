@@ -94,6 +94,17 @@ vm::version_ensure_prefix_v() {
   echo $version
 }
 
+# get latest version according to the version provided
+vm::get_latest_version() {
+  local version=$1
+  if [ -z "$version" ]; then
+    log::error "[vm::get_latest_version] version is required"
+    exit 1
+  fi
+
+  nvm::list_remote | grep $version | sort -V | tail -n 1
+}
+
 export -f vm::os
 export -f vm::arch
 
@@ -105,3 +116,5 @@ export -f vm::ensure
 export -f vm::version_remove_v
 export -f vm::version_parse
 export -f vm::version_ensure_prefix_v
+
+export -f vm::get_latest_version

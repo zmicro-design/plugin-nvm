@@ -4,6 +4,34 @@
 nvm::install() {
   vm::ensure
 
+  local version=$1
+  if [ -z "$version" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "default" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "lts" ]; then
+    version=$PLUGIN_NVM_NODE_LTS_VERSION
+  elif [ "$version" = "latest" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  fi
+
+  # search local
+  if [ "$(nvm::has_version_local $version)" = "true" ]; then
+    log::info "you have installed version: $(color::green $version)"
+    exit 0
+  fi
+
+  # infer latest version
+  local latest_version=$(vm::get_latest_version $version)
+  if [ "$latest_version" = "" ]; then
+    log::error "can not find version: $(color::red $version)"
+    exit 1
+  fi
+
+  local raw_version=$version
+  version=$latest_version
+  log::info "installing $raw_version ($version) ..."
+
   local node_home=${PLUGIN_NVM_VERSIONS}/${version}
   if [ -d "$node_home" ]; then
     # log::info "[$(timestamp)] node ${version} already installed"
@@ -19,7 +47,7 @@ nvm::install() {
   fi
   
   # 1. get version (vm::version_parse only use in install)
-  local version=$(vm::version_parse $1)
+  # local version=$(vm::version_parse $version_raw)
   # 2. get download url
   local url=$(nvm::internal_install_get_download_url $version)
 
@@ -35,6 +63,8 @@ nvm::install() {
     # apply env
     nvm::env
   fi
+
+  log::success "install $raw_version ($version) success"
 }
 
 # nvm::internal_install_get_download_url get download url

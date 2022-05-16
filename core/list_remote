@@ -2,7 +2,8 @@
 
 nvm::list_remote() {
   local versions=$(git ls-remote -t $PLUGIN_NVM_NODE_REPO | awk -F/ '{ print $NF }' |  awk '!/\^\{\}$/')
-  for version in ${versions[@]}; do
+  local sorted_version=$(echo $versions | tr ' ' '\n' | sort -V)
+  for version in ${sorted_version[@]}; do
     echo $version
   done
 }

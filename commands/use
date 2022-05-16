@@ -20,6 +20,13 @@ core() {
     inquirer::select "Select ?" availables version
   fi
 
+  if [ "$(nvm::has_version_local $version)" = "true" ]; then
+    local local_version=$(nvm::get_version_local $version)
+    nvm::use $local_version
+    echo "current: $version ($local_version)"
+    exit 0
+  fi
+
   nvm::use $version
 
   echo "current: $version"

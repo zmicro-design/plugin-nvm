@@ -1,0 +1,29 @@
+#!/bin/bash
+
+nvm::has_version_local() {
+  local version=$1
+  if [ -z "$version" ]; then
+    log::error "[nvm::has] version is required"
+    exit 1
+  fi
+
+  nvm::list | grep $version >> /dev/null 2>&1
+  if [ "$?" = "0" ]; then
+    echo "true"
+  else
+    echo "false"
+  fi
+}
+
+nvm::get_version_local() {
+  local version=$1
+  if [ -z "$version" ]; then
+    log::error "[nvm::has] version is required"
+    exit 1
+  fi
+
+  nvm::list | sort -V | tail -n 1
+}
+
+export -f nvm::has_version_local
+export -f nvm::get_version_local
