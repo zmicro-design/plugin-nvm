@@ -25,7 +25,7 @@ wget -qO- https://raw.githubusercontent.com/zmicro-design/plugin-nvm/master/inst
 ## Usage
 
 ```markdown
-Node Version Manager (v1.0.4)
+Node Version Manager (v1.2.4)
 
 Node Version Manager is a tool for managing multiple Go versions.
 
@@ -37,6 +37,7 @@ Usage:
   znvm ls-remote           - List all Go versions from remote
   znvm current             - Show current Node version
   znvm exec                - Enter new shell with node -v for tmp
+  znvm pack [dist_dir]     - Pack Current Node Version to a tar.gz file
   znvm help                - Show help
 
 Example:
@@ -46,6 +47,9 @@ Example:
   znvm ls
   znvm ls-remote
   znvm current
+  znvm workon v16 node -v
+  znvm workon v12 node -v
+  znvm workon v16 npm run build
 ```
 
 ## License
