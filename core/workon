@@ -39,7 +39,7 @@ nvm::workon() {
   export PATH=$NODE_USER_HOME/bin:$NODE_HOME/bin:$PATH
 
   # run command
-  eval $command
+  eval "$command"
 }
 
 export -f nvm::workon
