@@ -73,7 +73,6 @@ nvm::internal_install_get_download_url() {
   local os=$(vm::os)
   local arch=$(vm::arch)
 
-  # local filename=go${version}.${os}-${arch}.tar.gz
   local filename=node-v${version}-${os}-${arch}.tar.gz
   local tar_gz_url=${PLUGIN_NVM_NODE_SOURCE_OFFICIAL}/v${version}/$filename
   if [ "$(net::is_google_visitable)" = "false" ]; then

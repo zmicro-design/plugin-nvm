@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# nvm::use change the current version of go
+# nvm::use change the current version of Node.js
 nvm::use() {
   local version=$1
   if [ -z "$version" ]; then

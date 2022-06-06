@@ -6,7 +6,7 @@ name() {
 }
 
 description() {
-  echo "Node Version Manager is a tool for managing multiple Go versions."
+  echo "Node Version Manager is a tool for managing multiple Node.js versions."
 }
 
 usage() {
@@ -14,8 +14,8 @@ usage() {
   echo "  znvm install <version>   - Install Node version"
   echo "  znvm use <version>       - Use Node version"
   echo "  znvm remove <version>    - Remove Node version"
-  echo "  znvm ls                  - List the Go versions installed"
-  echo "  znvm ls-remote           - List all Go versions from remote"
+  echo "  znvm ls                  - List the Node.js versions installed"
+  echo "  znvm ls-remote           - List all Node.js versions from remote"
   echo "  znvm current             - Show current Node version"
   echo "  znvm exec                - Enter new shell with node -v for tmp"
   echo "  znvm pack [dist_dir]     - Pack Current Node Version to a tar.gz file"
