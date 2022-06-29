@@ -147,13 +147,6 @@ nvm::internal_install_apply_local() {
   local os=$(vm::os)
   local arch=$(vm::arch)
 
-  # @PATCH
-  # node < v16 && macos && m1 not support
-  local major_version=$(echo ${version#v} | awk -F "." '{print $1}')
-  if [ "${major_version}" -lt "16" ] && [ "$os" = "darwin" ] && [ "$arch" = "arm64" ]; then
-    arch="x64"
-  fi
-
   local version=$1
   if [ -z "$version" ]; then
     log::error "[nvm::internal_install_apply_local] version is required"
@@ -162,6 +155,13 @@ nvm::internal_install_apply_local() {
 
   # add prefix v*
   version=$(vm::version_ensure_prefix_v $version)
+
+  # @PATCH
+  # node < v16 && macos && m1 not support
+  local major_version=$(echo ${version#v} | awk -F "." '{print $1}')
+  if [ "${major_version}" -lt "16" ] && [ "$os" = "darwin" ] && [ "$arch" = "arm64" ]; then
+    arch="x64"
+  fi
 
   # clean old
   if [ -d "$PLUGIN_NVM_VERSIONS/$version" ]; then
