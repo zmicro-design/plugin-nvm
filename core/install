@@ -73,6 +73,13 @@ nvm::internal_install_get_download_url() {
   local os=$(vm::os)
   local arch=$(vm::arch)
 
+  # @PATCH
+  # node < v16 && macos && m1 not support
+  local major_version=$(echo ${version#v} | awk -F "." '{print $1}')
+  if [ "${major_version}" -lt "16" ] && [ "$os" = "darwin" ] && [ "$arch" = "arm64" ]; then
+    arch="x64"
+  fi
+
   # local filename=go${version}.${os}-${arch}.tar.gz
   local filename=node-v${version}-${os}-${arch}.tar.gz
   local tar_gz_url=${PLUGIN_NVM_NODE_SOURCE_OFFICIAL}/v${version}/$filename

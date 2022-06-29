@@ -19,7 +19,7 @@ core() {
     version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
   fi
 
-  nvm::install $latest_version
+  nvm::install $version
 
   if [ -f "$HOME/.zshrc" ]; then
     log::success "load nodejs by reloading env with $(color::success "source $HOME/.zshrc")"
