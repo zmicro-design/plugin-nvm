@@ -20,20 +20,33 @@ nvm::use() {
   fi
 
   # @TODO force sudo
-  sudo ls >> /dev/null 2>&1
+  sudo ls >>/dev/null 2>&1
 
   if [ -d $PLUGIN_NVM_NODE_HOME ]; then
     # if not a link
-    file $PLUGIN_NVM_NODE_HOME | grep symbolic >> /dev/null 2>&1
+    file $PLUGIN_NVM_NODE_HOME | grep symbolic >>/dev/null 2>&1
     if [ "$?" != "0" ]; then
       sudo rm -rf $PLUGIN_NVM_NODE_HOME
     else
       sudo rm -f $PLUGIN_NVM_NODE_HOME
     fi
   fi
-  
+
+  if [ ! -d "$PLUGIN_NVM_USR_LOCAL_BIN" ]; then
+    sudo mkdir -p $PLUGIN_NVM_USR_LOCAL_BIN
+  fi
+
   sudo ln -sf $PLUGIN_NVM_VERSIONS/$version $PLUGIN_NVM_NODE_HOME
-  echo $version > $PLUGIN_NVM_VERSION_CURRENT
+  # @FIX n
+  if [ -d "$PLUGIN_NVM_USR_LOCAL_BIN/node" ]; then
+    sudo rm -rf $PLUGIN_NVM_USR_LOCAL_BIN/node
+  elif [ -f "$PLUGIN_NVM_USR_LOCAL_BIN/node" ]; then
+    sudo rm -f $PLUGIN_NVM_USR_LOCAL_BIN/node
+  fi
+
+  sudo ln -sf $PLUGIN_NVM_NODE_BIN/node $PLUGIN_NVM_USR_LOCAL_BIN/node
+  #
+  echo $version >$PLUGIN_NVM_VERSION_CURRENT
 
   # apply env
   nvm::env
