@@ -6,7 +6,7 @@ help() {
   echo "Pack Node To A TGZ File"
   echo ""
   echo "Usage:"
-  echo "  znvm pack [dist_dir]"
+  echo "  nvm pack [dist_dir]"
 }
 
 core() {

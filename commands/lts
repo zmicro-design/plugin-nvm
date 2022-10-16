@@ -4,7 +4,7 @@ help() {
   echo "Use LTS Version"
   echo ""
   echo "Usage:"
-  echo "  znvm lts"
+  echo "  nvm lts"
 }
 
 core() {

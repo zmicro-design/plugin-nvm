@@ -62,4 +62,4 @@ jobs:
         run: |
           zmicro nvm -v
           export PATH=$(zmicro bin path):$PATH
-          znvm -v
+          nvm -v

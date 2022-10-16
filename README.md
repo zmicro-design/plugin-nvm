@@ -4,10 +4,10 @@
 [![Build Status](https://github.com/zmicro-design/plugin-nvm/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/zmicro-design/plugin-nvm/actions/workflows/test.yml)
 [![GitHub issues](https://img.shields.io/github/issues/zmicro-design/plugin-nvm.svg)](https://github.com/zmicro-design/plugin-nvm/issues)
 
-
 ## Installation
 
 To install the package, run:
+
 ```bash
 zmicro plugin install nvm
 ```
@@ -30,27 +30,28 @@ Node Version Manager (v1.2.4)
 Node Version Manager is a tool for managing multiple Node.js versions.
 
 Usage:
-  znvm install <version>   - Install Node version
-  znvm use <version>       - Use Node version
-  znvm remove <version>    - Remove Node version
-  znvm ls                  - List the Node.js versions installed
-  znvm ls-remote           - List all Node.js versions from remote
-  znvm current             - Show current Node version
-  znvm exec                - Enter new shell with node -v for tmp
-  znvm pack [dist_dir]     - Pack Current Node Version to a tar.gz file
-  znvm help                - Show help
+  nvm install <version>   - Install Node version
+  nvm use <version>       - Use Node version
+  nvm remove <version>    - Remove Node version
+  nvm ls                  - List the Node.js versions installed
+  nvm ls-remote           - List all Node.js versions from remote
+  nvm current             - Show current Node version
+  nvm exec                - Enter new shell with node -v for tmp
+  nvm pack [dist_dir]     - Pack Current Node Version to a tar.gz file
+  nvm help                - Show help
 
 Example:
-  znvm install v16.14.2
-  znvm use v16.14.2
-  znvm remove v16.14.2
-  znvm ls
-  znvm ls-remote
-  znvm current
-  znvm workon v16 node -v
-  znvm workon v12 node -v
-  znvm workon v16 npm run build
+  nvm install v16.14.2
+  nvm use v16.14.2
+  nvm remove v16.14.2
+  nvm ls
+  nvm ls-remote
+  nvm current
+  nvm workon v16 node -v
+  nvm workon v12 node -v
+  nvm workon v16 npm run build
 ```
 
 ## License
+
 ZMicro Design is released under the [MIT License](./LICENSE).

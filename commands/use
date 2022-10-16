@@ -4,7 +4,7 @@ load inquirer
 
 help() {
   echo "Usage:"
-  echo "  znvm use"
+  echo "  nvm use"
 }
 
 core() {
@@ -14,7 +14,7 @@ core() {
   fi
 
   local version=$1
-  
+
   if [ -z "$version" ]; then
     local availables=($(nvm::list))
     inquirer::select "Select ?" availables version

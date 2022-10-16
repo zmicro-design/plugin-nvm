@@ -6,12 +6,12 @@ help() {
   echo "Make it easy to work on specific node version"
   echo ""
   echo "Usage:"
-  echo "  znvm workon <version> [command] [args ...]"
+  echo "  nvm workon <version> [command] [args ...]"
   echo ""
   echo "Example:"
-  echo "  znvm workon v16 node -v"
-  echo "  znvm workon v12 node -v"
-  echo "  znvm workon v16 npm run build"
+  echo "  nvm workon v16 node -v"
+  echo "  nvm workon v12 node -v"
+  echo "  nvm workon v16 npm run build"
 }
 
 core() {
@@ -22,7 +22,7 @@ core() {
 
   local version=$1
   local command=${@:2}
-  
+
   if [ -z "$version" ]; then
     local availables=($(nvm::list))
     inquirer::select "Select ?" availables version

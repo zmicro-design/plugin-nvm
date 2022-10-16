@@ -11,28 +11,28 @@ description() {
 
 usage() {
   echo "Usage:"
-  echo "  znvm install <version>   - Install Node version"
-  echo "  znvm use <version>       - Use Node version"
-  echo "  znvm remove <version>    - Remove Node version"
-  echo "  znvm ls                  - List the Node.js versions installed"
-  echo "  znvm ls-remote           - List all Node.js versions from remote"
-  echo "  znvm current             - Show current Node version"
-  echo "  znvm exec                - Enter new shell with node -v for tmp"
-  echo "  znvm pack [dist_dir]     - Pack Current Node Version to a tar.gz file"
-  echo "  znvm help                - Show help"
+  echo "  nvm install <version>   - Install Node version"
+  echo "  nvm use <version>       - Use Node version"
+  echo "  nvm remove <version>    - Remove Node version"
+  echo "  nvm ls                  - List the Node.js versions installed"
+  echo "  nvm ls-remote           - List all Node.js versions from remote"
+  echo "  nvm current             - Show current Node version"
+  echo "  nvm exec                - Enter new shell with node -v for tmp"
+  echo "  nvm pack [dist_dir]     - Pack Current Node Version to a tar.gz file"
+  echo "  nvm help                - Show help"
 }
 
 example() {
   echo "Example:"
-  echo "  znvm install $PLUGIN_NVM_NODE_DEFAULT_VERSION"
-  echo "  znvm use $PLUGIN_NVM_NODE_DEFAULT_VERSION"
-  echo "  znvm remove $PLUGIN_NVM_NODE_DEFAULT_VERSION"
-  echo "  znvm ls"
-  echo "  znvm ls-remote"
-  echo "  znvm current"
-  echo "  znvm workon v16 node -v"
-  echo "  znvm workon v12 node -v"
-  echo "  znvm workon v16 npm run build"
+  echo "  nvm install $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  nvm use $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  nvm remove $PLUGIN_NVM_NODE_DEFAULT_VERSION"
+  echo "  nvm ls"
+  echo "  nvm ls-remote"
+  echo "  nvm current"
+  echo "  nvm workon v16 node -v"
+  echo "  nvm workon v12 node -v"
+  echo "  nvm workon v16 npm run build"
 }
 
 core() {

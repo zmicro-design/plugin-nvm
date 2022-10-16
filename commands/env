@@ -4,7 +4,7 @@ load inquirer
 
 help() {
   echo "Usage:"
-  echo "  znvm env"
+  echo "  nvm env"
 }
 
 core() {

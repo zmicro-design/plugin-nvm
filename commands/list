@@ -2,7 +2,7 @@
 
 help() {
   echo "Usage:"
-  echo "  znvm list"
+  echo "  nvm list"
 }
 
 core() {

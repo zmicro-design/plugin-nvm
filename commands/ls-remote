@@ -2,7 +2,7 @@
 
 help() {
   echo "Usage:"
-  echo "  znvm ls-remote"
+  echo "  nvm ls-remote"
 }
 
 core() {

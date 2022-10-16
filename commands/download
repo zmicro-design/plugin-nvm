@@ -6,7 +6,7 @@ help() {
   echo "Download Node TGZ File"
   echo ""
   echo "Usage:"
-  echo "  znvm download <version> <dist_dir>"
+  echo "  nvm download <version> <dist_dir>"
 }
 
 core() {

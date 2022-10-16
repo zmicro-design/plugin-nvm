@@ -2,7 +2,7 @@
 
 help() {
   echo "Usage:"
-  echo "  znvm install [version]"
+  echo "  nvm install [version]"
   echo ""
   echo "Options:"
   echo "  version    - Install Node version, default: $PLUGIN_NVM_NODE_DEFAULT_VERSION"

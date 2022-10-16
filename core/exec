@@ -8,16 +8,16 @@ nvm::exec() {
     PLUGIN_NVM_NODE_HOME=$PLUGIN_NVM_VERSIONS/$version
   fi
 
-  which node >> /dev/null 2>&1
+  which node >>/dev/null 2>&1
   if [ $? -eq 0 ]; then
-    log::error "[nvm::exec] found node, you should use 'znvm use' instead of 'znvm exec'"
+    log::error "[nvm::exec] found node, you should use 'nvm use' instead of 'nvm exec'"
     exit 1
   fi
 
   export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
   export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
   export PATH=$NODE_USER_HOME/bin:$NODE_HOME/bin:$PATH
-  
+
   exec $SHELL
 }
 
