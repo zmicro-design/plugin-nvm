@@ -114,16 +114,16 @@ nvm::internal_install_download() {
   fi
 
   # 302 redirect
-  curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "302" >>/dev/null 2>&1
+  os::curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "302" >>/dev/null 2>&1
   if [ "$?" = "0" ]; then
-    local location=$(curl -I $tar_gz_url 2>/dev/null | grep location | awk '{print $2}')
+    local location=$(os::curl -I $tar_gz_url 2>/dev/null | grep location | awk '{print $2}')
 
     # fix location
     # stackoverflow: https://stackoverflow.com/questions/70660633/curl-3-url-using-bad-illegal-format-or-missing-url-in-bash-windows
     location=$(echo $location | sed 's/\r//g')
 
     # 404
-    curl -I $location 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
+    os::curl -I $location 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
     if [ "$?" = "0" ]; then
       log::error "[nvm::install] invalid version: $version"
       log::error "[nvm::install] see more version at $PLUGIN_NVM_NODE_SOURCE_OFFICIAL"
@@ -131,7 +131,7 @@ nvm::internal_install_download() {
     fi
   else
     # 404
-    curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
+    os::curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
     if [ "$?" = "0" ]; then
       log::error "[nvm::install] invalid version: $version"
       log::error "[nvm::install] see more version at $PLUGIN_NVM_NODE_SOURCE_OFFICIAL"
@@ -140,7 +140,8 @@ nvm::internal_install_download() {
   fi
 
   # download
-  os::wget -c $tar_gz_url -O $PLUGIN_NVM_NODE_DOWNLOAD_TMP
+  # os::wget -c $tar_gz_url -O $PLUGIN_NVM_NODE_DOWNLOAD_TMP
+  os::curl --progress-bar -fSL $tar_gz_url -o $PLUGIN_NVM_NODE_DOWNLOAD_TMP
 }
 
 nvm::internal_install_apply_local() {
