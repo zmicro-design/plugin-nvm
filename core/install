@@ -131,8 +131,7 @@ nvm::internal_install_download() {
   fi
 
   # 302 redirect
-  os::curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "302" >>/dev/null 2>&1
-  if [ "$?" = "0" ]; then
+  if [ "$(net::status_code $tar_gz_url)" = "302" ]; then
     local location=$(os::curl -I $tar_gz_url 2>/dev/null | grep location | awk '{print $2}')
 
     # fix location
@@ -140,16 +139,14 @@ nvm::internal_install_download() {
     location=$(echo $location | sed 's/\r//g')
 
     # 404
-    os::curl -I $location 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
-    if [ "$?" = "0" ]; then
+    if [ "$(net::is_not_found $location)" = "true" ]; then
       log::error "[nvm::install] invalid version: $version"
       log::error "[nvm::install] see more version at $PLUGIN_NVM_NODE_SOURCE_OFFICIAL"
       exit 1
     fi
   else
     # 404
-    os::curl -I $tar_gz_url 2>/dev/null | head -n 1 | grep "404" >>/dev/null 2>&1
-    if [ "$?" = "0" ]; then
+    if [ "$(net::is_not_found $tar_gz_url)" = "true" ]; then
       log::error "[nvm::install] invalid version: $version"
       log::error "[nvm::install] see more version at $PLUGIN_NVM_NODE_SOURCE_OFFICIAL"
       exit 1
