@@ -24,13 +24,13 @@ nvm::install() {
   # infer latest version
   local latest_version=$(vm::get_latest_version $version)
   if [ "$latest_version" = "" ]; then
-    log::error "can not find version: $(color::red $version)"
+    log::error "[$(timestamp)] can not find version: $(color::red $version)"
     exit 1
   fi
 
   local raw_version=$version
   version=$latest_version
-  log::info "installing $raw_version ($version) ..."
+  log::info "[$(timestamp)] installing $raw_version ($version) ..."
 
   local node_home=${PLUGIN_NVM_VERSIONS}/${version}
   if [ -d "$node_home" ]; then
@@ -53,18 +53,35 @@ nvm::install() {
 
   # 3. download
   nvm::internal_install_download $version $url
+  if [ "$?" != "0" ]; then
+    log::error "[$(timestamp)] failed to download node ${version}."
+    return 1
+  fi
+
   # 4. apply local
   nvm::internal_install_apply_local $version
+  if [ "$?" != "0" ]; then
+    log::error "[$(timestamp)] failed to apply node ${version}."
+    return 1
+  fi
 
   # if no current, set current
   if [ "$(nvm::current)" == "" ]; then
     nvm::use $version
+    if [ "$?" != "0" ]; then
+      log::error "[$(timestamp)] failed to use node ${version}."
+      return 1
+    fi
   else
     # apply env
     nvm::env
+    if [ "$?" != "0" ]; then
+      log::error "[$(timestamp)] failed to apply node env."
+      return 1
+    fi
   fi
 
-  log::success "install $raw_version ($version) success"
+  log::success "[$(timestamp)] install $raw_version ($version) success"
 }
 
 # nvm::internal_install_get_download_url get download url
