@@ -10,6 +10,8 @@ nvm::env() {
   # change the default global path, use for bin, lib(node_modules)
   # @TODO
   npm config set prefix $PLUGIN_NVM_NODE_PATH
+  # set npm cache path
+  npm config set cache $PLUGIN_NVM_NPM_CACHE_PATH
 
   # Write to SHELL
   if [ -f $HOME/.bashrc ]; then
