@@ -22,12 +22,14 @@ nvm::env() {
   for f in ${filenames[@]}; do
     # clean old config
     local profile=$HOME/$f
-    cat $profile | grep "export NODE_HOME=" >>/dev/null 2>&1
-    if [ "$?" = "0" ]; then
-      fs::remove_line_has_str "$profile" "# ZMICRO_NVM"
-      fs::remove_line_has_str "$profile" "export NODE_HOME="
-      fs::remove_line_has_str "$profile" "export NODE_USER_HOME="
-      fs::remove_line_has_str "$profile" "exportPATH=\$NODE_USER_HOME"
+    if [ -f "$profile" ]; then
+      cat $profile | grep "export NODE_HOME=" >>/dev/null 2>&1
+      if [ "$?" = "0" ]; then
+        fs::remove_line_has_str "$profile" "# ZMICRO_NVM"
+        fs::remove_line_has_str "$profile" "export NODE_HOME="
+        fs::remove_line_has_str "$profile" "export NODE_USER_HOME="
+        fs::remove_line_has_str "$profile" "exportPATH=\$NODE_USER_HOME"
+      fi
     fi
   done
 
