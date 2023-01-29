@@ -56,6 +56,9 @@ jobs:
         with:
           fetch-depth: "0"
 
+      - name: Setup Docker
+        uses: zmicro-design/action-setup-docker@v1
+
       - name: Install
         run: ./install
 
@@ -79,9 +82,6 @@ jobs:
           zmicro nvm use lts
           export PATH=$(zmicro nvm bin):$PATH
           node --version
-
-      - name: Setup Docker
-        uses: zmicro-design/action-setup-docker@v1
 
       - name: Test in Docker
         run: |
