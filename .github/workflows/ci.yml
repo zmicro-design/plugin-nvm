@@ -75,13 +75,13 @@ jobs:
 
       - name: Use Default
         run: |
-          zmicro nvm default
+          zmicro nvm use default
           export PATH=$(zmicro nvm bin):$PATH
           node --version
 
       - name: Use LTS
         run: |
-          zmicro nvm lts
+          zmicro nvm use lts
           export PATH=$(zmicro nvm bin):$PATH
           node --version
 
