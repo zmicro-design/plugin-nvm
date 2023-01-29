@@ -20,7 +20,7 @@ fi
 
 # nvm
 if [ -z "$version" ]; then
-  \. $ZMICRO_HOME/plugins/nvm/config
+  export PLUGIN_NVM_NODE_DEFAULT_VERSION=v16.17.0
   export version=PLUGIN_NVM_NODE_DEFAULT_VERSION
 fi
 if [ ! -d "$PLUGIN_XVM_VERSIONS/$version" ]; then
