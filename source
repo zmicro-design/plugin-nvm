@@ -21,6 +21,7 @@ fi
 
 version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
 
+export PLUGIN_NVM_NODE_CURRENT_VERSION=$version
 # node
 export NODE_HOME=$PLUGIN_XVM_VERSIONS/$version
 export NODE_USER_HOME=$HOME/.node
