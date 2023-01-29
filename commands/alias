@@ -20,8 +20,8 @@ core() {
   case $name in
   default)
     if [ -z "$version" ]; then
-      log::error "[$(timestamp)] alias default version is required."
-      return 1
+      nvm::default
+      return 0
     fi
 
     nvm use $version
