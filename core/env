@@ -35,7 +35,7 @@ nvm::env() {
 
   local envs=$(
     cat <<-END
-[ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
+[ -s "\$ZMICRO_HOME/plugins/nvm/source" ] && \. \$ZMICRO_HOME/plugins/nvm/source
 END
   )
   config::profile "# ZMICRO_NVM" "$envs"

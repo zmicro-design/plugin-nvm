@@ -2,6 +2,8 @@
 
 # nvm::current gets the current version of Node.js
 nvm::current() {
+  [ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
+
   echo $PLUGIN_NVM_NODE_CURRENT_VERSION
 }
 
