@@ -2,12 +2,12 @@
 
 # nvm::current gets the current version of Node.js
 nvm::current() {
-  if [ ! -f "${PLUGIN_NVM_VERSION_CURRENT}" ]; then
-    echo ""
+  if [ "$(os::has_command node)" = "true" ]; then
+    node -v
     return
   fi
 
-  echo $(cat $PLUGIN_NVM_VERSION_CURRENT)
+  echo "node not found"
 }
 
 export -f nvm::current

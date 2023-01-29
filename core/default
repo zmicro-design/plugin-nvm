@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# nvm::default gets the default version of Node.js
+nvm::default() {
+  if [ ! -f "${PLUGIN_NVM_VERSION_CURRENT}" ]; then
+    echo "$PLUGIN_NVM_NODE_DEFAULT_VERSION"
+    return
+  fi
+
+  echo $(cat $PLUGIN_NVM_VERSION_CURRENT)
+}
+
+export -f nvm::default

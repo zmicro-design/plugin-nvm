@@ -20,9 +20,7 @@ nvm::env() {
       cat << EOF >> $HOME/.bashrc
 
 # ZMICRO_NVM
-export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
-export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
-export PATH=\$NODE_USER_HOME/bin:\$NODE_HOME/bin:\$PATH
+[ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
 EOF
     fi
   fi
@@ -33,9 +31,7 @@ EOF
       cat << EOF >> $HOME/.zshrc
 
 # ZMICRO_NVM
-export NODE_HOME=${PLUGIN_NVM_NODE_HOME}
-export NODE_USER_HOME=${PLUGIN_NVM_NODE_PATH}
-export PATH=\$NODE_USER_HOME/bin:\$NODE_HOME/bin:\$PATH
+[ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
 EOF
     fi
   fi

@@ -2,7 +2,7 @@
 
 help() {
   echo "Usage:"
-  echo "  nvm current"
+  echo "  nvm default"
 }
 
 core() {
@@ -11,13 +11,13 @@ core() {
     exit 0
   fi
 
-  local current=$(nvm::current)
-  if [ -z "$current" ]; then
+  local default=$(nvm::default)
+  if [ -z "$default" ]; then
     echo "No version is currently set"
     exit 0
   fi
 
-  echo "$current"
+  echo "$default"
 }
 
 run() {

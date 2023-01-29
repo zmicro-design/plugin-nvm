@@ -1,0 +1,40 @@
+#!/bin/bash
+
+help() {
+  echo "Usage:"
+  echo "  nvm alias <name> <version>"
+  echo ""
+  echo "Example:"
+  echo "  nvm alias default v16"
+}
+
+core() {
+  if [ "$1" = "-h" ] || [ "$1" = "--help" ] || [ "$1" = "" ] ; then
+    help
+    exit 0
+  fi
+
+  local name="$1"
+  local version="$2"
+
+  case $name in
+  default)
+    if [ -z "$version" ]; then
+      log::error "[$(timestamp)] alias default version is required."
+      return 1
+    fi
+
+    nvm use $version
+    ;;
+  *)
+    log::error "[$(timestamp)] unsupport command: nvm alias $@"
+    return 1
+    ;;
+  esac
+}
+
+run() {
+  core $@
+}
+
+run $@

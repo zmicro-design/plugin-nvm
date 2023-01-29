@@ -1,0 +1,30 @@
+#!/bin/bash
+
+export ZMICRO_DATA_PARENT="${ZMICRO_DATA_PARENT}"
+if [ "$(uname -s)" = "Darwin" ]; then
+  export ZMICRO_DATA_PARENT=/opt
+fi
+
+export PLUGIN_XVM_DATA=${ZMICRO_DATA_PARENT}/data/plugins/nvm
+export PLUGIN_XVM_VERSIONS=${PLUGIN_XVM_DATA}/versions
+export PLUGIN_XVM_VERSION_CURRENT=${PLUGIN_XVM_DATA}/current
+
+version=""
+if [ -f "$PWD/.nvmrc" ]; then
+  version="$(cat $PWD/.nvmrc)"
+else
+  if [ ! -f "$PLUGIN_XVM_VERSION_CURRENT" ]; then
+    exit 1
+  fi
+  version="$(cat $PLUGIN_XVM_VERSION_CURRENT)"
+fi
+
+version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
+
+# node
+export NODE_HOME=$PLUGIN_XVM_VERSIONS/$version
+export NODE_USER_HOME=$HOME/.node
+export PATH=$NODE_USER_HOME/bin:$NODE_HOME/bin:$PATH
+
+# usage: as nvm.sh
+# [ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
