@@ -25,7 +25,9 @@ if [ -z "$version" ]; then
 fi
 if [ ! -d "$PLUGIN_XVM_VERSIONS/$version" ]; then
   if [ -d "$PLUGIN_XVM_VERSIONS" ]; then
-    version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
+    if [ -n "$(ls $PLUGIN_XVM_VERSIONS)" ]; then
+      version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
+    fi
   fi
 fi
 export PLUGIN_NVM_NODE_CURRENT_VERSION=$version
