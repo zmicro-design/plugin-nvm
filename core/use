@@ -32,11 +32,13 @@ nvm::use() {
 
   if [ -d $PLUGIN_NVM_NODE_HOME ]; then
     # if not a link
-    file $PLUGIN_NVM_NODE_HOME | grep symbolic >>/dev/null 2>&1
-    if [ "$?" != "0" ]; then
-      sudo rm -rf $PLUGIN_NVM_NODE_HOME
-    else
-      sudo rm -f $PLUGIN_NVM_NODE_HOME
+    if [ "$(os::has_command file)" = "true" ]; then
+      file $PLUGIN_NVM_NODE_HOME | grep symbolic >>/dev/null 2>&1
+      if [ "$?" != "0" ]; then
+        sudo rm -rf $PLUGIN_NVM_NODE_HOME
+      else
+        sudo rm -f $PLUGIN_NVM_NODE_HOME
+      fi
     fi
   fi
 
