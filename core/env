@@ -28,7 +28,7 @@ nvm::env() {
         fs::remove_line_has_str "$profile" "# ZMICRO_NVM"
         fs::remove_line_has_str "$profile" "export NODE_HOME="
         fs::remove_line_has_str "$profile" "export NODE_USER_HOME="
-        fs::remove_line_has_str "$profile" "exportPATH=\$NODE_USER_HOME"
+        fs::remove_line_has_str "$profile" "export PATH=\$NODE_USER_HOME"
       fi
     fi
   done
