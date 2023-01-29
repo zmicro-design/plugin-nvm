@@ -45,8 +45,13 @@ jobs:
             提交人: ${{ github.actor }}
             状态: 构建失败（https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}）
 
-  test_ubuntu:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+
     steps:
       - name: Get Current Date
         id: date
@@ -55,9 +60,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
-
-      - name: Setup Docker
-        uses: zmicro-design/action-setup-docker@v1
 
       - name: Install
         run: ./install
@@ -83,42 +85,12 @@ jobs:
           export PATH=$(zmicro nvm bin):$PATH
           node --version
 
+      - name: Setup Docker
+        if: matrix.os == 'ubuntu-latest'
+        uses: zmicro-design/action-setup-docker@v1
+
       - name: Test in Docker
+        if: matrix.os == 'ubuntu-latest'
         run: |
           export VERSION=$(echo ${GITHUB_REF} | sed -e "s%refs/tags/%%g")
           docker build --build-arg VERSION=${{ steps.meta.outputs.version }} -t nvm:debian -f ./Dockerfile .
-
-  test_macos:
-    runs-on: macos-latest
-    steps:
-      - name: Get Current Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
-
-      - name: Install
-        run: ./install
-
-      - name: Show Version
-        run: |
-          zmicro nvm -v
-          export PATH=$(zmicro bin path):$PATH
-          nvm -v
-      
-      - name: Run Test Cases
-        run: zmicro test core
-
-      - name: Use Default
-        run: |
-          zmicro nvm use default
-          export PATH=$(zmicro nvm bin):$PATH
-          node --version
-
-      - name: Use LTS
-        run: |
-          zmicro nvm use lts
-          export PATH=$(zmicro nvm bin):$PATH
-          node --version
