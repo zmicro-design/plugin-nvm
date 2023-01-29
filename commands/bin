@@ -14,7 +14,7 @@ core() {
   # echo $PLUGIN_NVM_NODE_BIN
 
   [ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
-  echo "$NODE_HOME"
+  echo "$NODE_HOME/bin"
 }
 
 run() {
