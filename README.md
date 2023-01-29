@@ -1,7 +1,7 @@
 # NVM - Node Version Manager Plugin for [ZMicro](https://github.com/zcorky/zmicro)
 
 [![Release](https://img.shields.io/github/tag/zmicro-design/plugin-nvm.svg?label=Release)](https://github.com/zmicro-design/plugin-nvm/tags)
-[![Build Status](https://github.com/zmicro-design/plugin-nvm/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/zmicro-design/plugin-nvm/actions/workflows/test.yml)
+[![Build Status](https://github.com/zmicro-design/plugin-nvm/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/zmicro-design/plugin-nvm/actions/workflows/ci.yml)
 [![GitHub issues](https://img.shields.io/github/issues/zmicro-design/plugin-nvm.svg)](https://github.com/zmicro-design/plugin-nvm/issues)
 
 ## Installation
