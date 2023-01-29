@@ -4,7 +4,7 @@ ARG VERSION="latest"
 
 RUN zmicro update
 
-RUN zmicro package install nvm@$VERSION
+RUN zmicro plugin install nvm@${VERSION}
 
 RUN zmicro nvm use default
 
