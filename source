@@ -13,15 +13,21 @@ version=""
 if [ -f "$PWD/.nvmrc" ]; then
   version="$(cat $PWD/.nvmrc)"
 else
-  if [ ! -f "$PLUGIN_XVM_VERSION_CURRENT" ]; then
-    exit 1
+  if [ -f "$PLUGIN_XVM_VERSION_CURRENT" ]; then
+    version="$(cat $PLUGIN_XVM_VERSION_CURRENT)"
   fi
-  version="$(cat $PLUGIN_XVM_VERSION_CURRENT)"
 fi
 
-version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
-
+# nvm
+if [ -z "$version" ]; then
+  \. $ZMICRO_HOME/plugins/nvm/config
+  export version=PLUGIN_NVM_NODE_DEFAULT_VERSION
+fi
+if [ ! -d "$PLUGIN_XVM_VERSIONS/$version" ]; then
+  version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
+fi
 export PLUGIN_NVM_NODE_CURRENT_VERSION=$version
+
 # node
 export NODE_HOME=$PLUGIN_XVM_VERSIONS/$version
 export NODE_USER_HOME=$HOME/.node
