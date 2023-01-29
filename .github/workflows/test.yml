@@ -64,13 +64,19 @@ jobs:
       - name: Install
         run: ./install
 
-      - name: Install (Stable/LTS)
-        run: zmicro nvm lts
-
-      - name: Run Test Cases
-        run: zmicro test core
-
-      - name: Show Version
+      - name: Install (Default)
         run: |
+          zmicro nvm default
           export PATH=$(zmicro nvm bin):$PATH
           node --version
+          # Run Test Cases
+          zmicro test core
+
+      - name: Install (Stable/LTS)
+        run: |
+          zmicro nvm lts
+          export PATH=$(zmicro nvm bin):$PATH
+          node --version
+          # Run Test Cases
+          zmicro test core
+

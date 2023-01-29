@@ -29,7 +29,7 @@ core() {
 
   nvm::use $version
 
-  echo "current: $version"
+  echo "current: $(nvm::current)"
 }
 
 run() {

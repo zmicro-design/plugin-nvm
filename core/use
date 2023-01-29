@@ -8,6 +8,14 @@ nvm::use() {
     exit 1
   fi
 
+  if [ "$version" = "default" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  elif [ "$version" = "lts" ]; then
+    version=$PLUGIN_NVM_NODE_LTS_VERSION
+  elif [ "$version" = "latest" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  fi
+
   # smart detect
   version=$(vm::version_ensure_prefix_v $version)
 
