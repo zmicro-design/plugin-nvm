@@ -2,7 +2,7 @@
 
 # nvm::env applys the env for node
 nvm::env() {
-  echo $PATH | grep $PLUGIN_NVM_NODE_BIN >> /dev/null 2>&1
+  echo $PATH | grep $PLUGIN_NVM_NODE_BIN >>/dev/null 2>&1
   if [ $? -ne 0 ]; then
     export PATH=$PATH:$PLUGIN_NVM_NODE_BIN
   fi
@@ -13,28 +13,30 @@ nvm::env() {
   # set npm cache path
   npm config set cache $PLUGIN_NVM_NPM_CACHE_PATH
 
-  # Write to SHELL
-  if [ -f $HOME/.bashrc ]; then
-    cat $HOME/.bashrc | grep ZMICRO_NVM >> /dev/null 2>&1
-    if [ "$?" != "0" ]; then
-      cat << EOF >> $HOME/.bashrc
-
-# ZMICRO_NVM
-[ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
-EOF
+  local filenames=(
+    .zshrc
+    .bashrc
+    .bash_profile
+    .profile
+  )
+  for f in ${filenames[@]}; do
+    # clean old config
+    local profile=$HOME/$f
+    cat $profile | grep "export NODE_HOME=" >>/dev/null 2>&1
+    if [ "$?" = "0" ]; then
+      fs::remove_line_has_str "$profile" "# ZMICRO_NVM"
+      fs::remove_line_has_str "$profile" "export NODE_HOME="
+      fs::remove_line_has_str "$profile" "export NODE_USER_HOME="
+      fs::remove_line_has_str "$profile" "exportPATH=\$NODE_USER_HOME"
     fi
-  fi
+  done
 
-  if [ -f $HOME/.zshrc ]; then
-    cat $HOME/.zshrc | grep ZMICRO_NVM >> /dev/null 2>&1
-    if [ "$?" != "0" ]; then
-      cat << EOF >> $HOME/.zshrc
-
-# ZMICRO_NVM
+  local envs=$(
+    cat <<-END
 [ -s "$ZMICRO_HOME/plugins/nvm/source" ] && \. $ZMICRO_HOME/plugins/nvm/source
-EOF
-    fi
-  fi
+END
+  )
+  config::profile "# ZMICRO_NVM" "$envs"
 }
 
 export -f nvm::env
