@@ -110,8 +110,8 @@ nvm::internal_install_get_download_url() {
   fi
 
   # custom source
-  if [ -n "${GO_SOURCE}" ]; then
-    tar_gz_url=${GO_SOURCE}/v${version}/$filename
+  if [ -n "${NODE_SOURCE}" ]; then
+    tar_gz_url=${NODE_SOURCE}/v${version}/$filename
   fi
 
   echo $tar_gz_url
