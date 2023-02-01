@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function test_nvm::internal_install_get_download_url() {
+  local version="v1.2.3"
+  local os=$(vm::os)
+  local arch=$(vm::arch)
+  local major_version=$(echo ${version#v} | awk -F "." '{print $1}')
+  if [ "${major_version}" -lt "16" ] && [ "$os" = "darwin" ] && [ "$arch" = "arm64" ]; then
+    arch="x64"
+  fi
+  local url=$(nvm::internal_install_get_download_url ${version})
+  testing::expect \
+    "${FUNCNAME[0]} - url for version: ${version}" \
+    "to_equal" \
+    "true" \
+    "$(string::ends_with $url ${version}/node-${version}-${os}-${arch}.tar.gz)"
+  echo "url: $url => ${version}/node-${version}-${os}-${arch}.tar.gz"
+
+  local version="v16.17.0"
+  local os=$(vm::os)
+  local arch=$(vm::arch)
+  local major_version=$(echo ${version#v} | awk -F "." '{print $1}')
+  if [ "${major_version}" -lt "16" ] && [ "$os" = "darwin" ] && [ "$arch" = "arm64" ]; then
+    arch="x64"
+  fi
+  local url=$(nvm::internal_install_get_download_url ${version})
+  testing::expect \
+    "${FUNCNAME[0]} - url for version: ${version}" \
+    "to_equal" \
+    "true" \
+    "$(string::ends_with $url ${version}/node-${version}-${os}-${arch}.tar.gz)"
+  echo "url: $url => ${version}/node-${version}-${os}-${arch}.tar.gz"
+}
