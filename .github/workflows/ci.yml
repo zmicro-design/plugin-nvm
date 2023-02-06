@@ -85,6 +85,18 @@ jobs:
           export PATH=$(zmicro nvm bin):$PATH
           node --version
 
+      - name: Use 14.x (compitable format => actions/setup-node@v1)
+        run: |
+          zmicro nvm use 14.x
+          export PATH=$(zmicro nvm bin):$PATH
+          node --version
+
+      - name: Use 14 (compitable format => nvm.sh)
+        run: |
+          zmicro nvm use 12
+          export PATH=$(zmicro nvm bin):$PATH
+          node --version
+
       - name: Setup Docker
         if: matrix.os == 'ubuntu-latest'
         uses: zmicro-design/action-setup-docker@v1
