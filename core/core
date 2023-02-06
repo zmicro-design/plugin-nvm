@@ -4,7 +4,7 @@
 vm::os() {
   local os="linux"
 
-  uname -a | grep "Darwin" >> /dev/null 2>&1
+  uname -a | grep "Darwin" >>/dev/null 2>&1
   if [ $? == 0 ]; then
     os=darwin
   fi
@@ -16,21 +16,21 @@ vm::os() {
 vm::arch() {
   local arch="x64"
 
-  uname -m | grep "arm64" >> /dev/null 2>&1
+  uname -m | grep "arm64" >>/dev/null 2>&1
   if [ $? == 0 ]; then
     arch=arm64
     echo $arch
     return
   fi
 
-  uname -m | grep "armv7" >> /dev/null 2>&1
+  uname -m | grep "armv7" >>/dev/null 2>&1
   if [ $? == 0 ]; then
     arch=armv7l
     echo $arch
     return
   fi
 
-  uname -m | grep "aarch64" >> /dev/null 2>&1
+  uname -m | grep "aarch64" >>/dev/null 2>&1
   if [ $? == 0 ]; then
     arch=arm64
     echo $arch
@@ -43,7 +43,7 @@ vm::arch() {
 # vm::tool_ensure ensures that the tool is installed.
 vm::tool_ensure() {
   local tool=$1
-  which $tool >> /dev/null 2>&1
+  which $tool >>/dev/null 2>&1
   if [ "$?" != "0" ]; then
     pm install $tool
   fi
@@ -52,7 +52,7 @@ vm::tool_ensure() {
 # vm::sudo_ensure ensures sudo permissions
 vm::sudo_ensure() {
   # @TODO force sudo
-  sudo ls >> /dev/null 2>&1
+  sudo ls >>/dev/null 2>&1
 }
 
 # vm::ensure ensures that the necessary tools are installed and sudo.
@@ -72,7 +72,7 @@ vm::version_remove_v() {
 # example: v1.15.7 => 1.15.7
 vm::version_parse() {
   local version=$(vm::version_remove_v "$@")
-   if [ -z "$1" ] || [ -z "$version" ]; then
+  if [ -z "$1" ] || [ -z "$version" ]; then
     log::error "[vm::version_parse] version is required"
     exit 1
   fi
@@ -87,6 +87,12 @@ vm::version_ensure_prefix_v() {
     exit 1
   fi
 
+  # 14.x => 14
+  # 16.x => 16
+  version=${version//.x/}
+
+  # 14 => v14
+  # 16 => v16
   if [ "${version:0:1}" != "v" ]; then
     version="v$version"
   fi

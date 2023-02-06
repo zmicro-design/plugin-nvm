@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function test_vm::version_ensure_prefix_v() {
+  testing::expect \
+    "${FUNCNAME[0]} - v16 => v16" \
+    "to_equal" \
+    "v16" \
+    "$(vm::version_ensure_prefix_v v16)"
+  
+  testing::expect \
+    "${FUNCNAME[0]} - 16 => v16" \
+    "to_equal" \
+    "v16" \
+    "$(vm::version_ensure_prefix_v 16)"
+
+  testing::expect \
+    "${FUNCNAME[0]} - 16.x => v16" \
+    "to_equal" \
+    "v16" \
+    "$(vm::version_ensure_prefix_v 16.x)"
+
+  testing::expect \
+    "${FUNCNAME[0]} - 16.17.x => v16.17" \
+    "to_equal" \
+    "v16.17" \
+    "$(vm::version_ensure_prefix_v 16.17.x)"
+
+  testing::expect \
+    "${FUNCNAME[0]} - 16.17.0 => v16.17.0" \
+    "to_equal" \
+    "v16.17.0" \
+    "$(vm::version_ensure_prefix_v 16.17.0)"
+}
