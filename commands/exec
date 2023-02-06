@@ -11,7 +11,10 @@ core() {
     exit 0
   fi
 
-  nvm::exec $@
+  local version=$1
+  version=$(vm::version_ensure_prefix_v $version)
+
+  nvm::exec $version ${@:1}
 }
 
 run() {

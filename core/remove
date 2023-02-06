@@ -9,9 +9,6 @@ nvm::remove() {
     exit 1
   fi
 
-  # smart detect
-  version=$(vm::version_ensure_prefix_v $version)
-
   if [ ! -d "$PLUGIN_NVM_VERSIONS/$version" ]; then
     log::error "[nvm::use] version $version not found"
     exit 1

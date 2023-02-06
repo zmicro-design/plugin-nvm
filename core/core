@@ -87,6 +87,20 @@ vm::version_ensure_prefix_v() {
     exit 1
   fi
 
+  if [ "$version" = "default" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+    echo $version
+    return
+  elif [ "$version" = "lts" ]; then
+    version=$PLUGIN_NVM_NODE_LTS_VERSION
+    echo $version
+    return
+  elif [ "$version" = "latest" ]; then
+    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+    echo $version
+    return
+  fi
+
   # 14.x => 14
   # 16.x => 16
   version=${version//.x/}
