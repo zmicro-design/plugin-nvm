@@ -19,6 +19,9 @@ core() {
     version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
   fi
 
+  # fix prefix
+  version=$(vm::version_ensure_prefix_v $version)
+
   nvm::install $version
 
   if [ -f "$HOME/.zshrc" ]; then

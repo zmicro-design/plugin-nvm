@@ -6,13 +6,8 @@ nvm::install() {
 
   local version=$1
   if [ -z "$version" ]; then
-    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
-  elif [ "$version" = "default" ]; then
-    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
-  elif [ "$version" = "lts" ]; then
-    version=$PLUGIN_NVM_NODE_LTS_VERSION
-  elif [ "$version" = "latest" ]; then
-    version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+    log::error "[nvm::exec] version is required"
+    return 1
   fi
 
   # search local
@@ -110,8 +105,8 @@ nvm::internal_install_get_download_url() {
   fi
 
   # custom source
-  if [ -n "${GO_SOURCE}" ]; then
-    tar_gz_url=${GO_SOURCE}/v${version}/$filename
+  if [ -n "${NODE_SOURCE}" ]; then
+    tar_gz_url=${NODE_SOURCE}/v${version}/$filename
   fi
 
   echo $tar_gz_url
@@ -167,9 +162,6 @@ nvm::internal_install_apply_local() {
     log::error "[nvm::internal_install_apply_local] version is required"
     exit 1
   fi
-
-  # add prefix v*
-  version=$(vm::version_ensure_prefix_v $version)
 
   # @PATCH
   # node < v16 && macos && m1 not support

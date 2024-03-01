@@ -2,9 +2,13 @@
 
 # nvm::env applys the env for node
 nvm::env() {
-  echo $PATH | grep $PLUGIN_NVM_NODE_BIN >>/dev/null 2>&1
-  if [ $? -ne 0 ]; then
-    export PATH=$PATH:$PLUGIN_NVM_NODE_BIN
+  # fix npm bin
+  # echo $PATH | grep $PLUGIN_NVM_NODE_BIN >>/dev/null 2>&1
+  # if [ $? -ne 0 ]; then
+  #   export PATH=$PATH:$PLUGIN_NVM_NODE_BIN
+  # fi
+  if [ -z "$NODE_HOME" ]; then
+    source $ZMICRO_HOME/plugins/nvm/source
   fi
 
   # change the default global path, use for bin, lib(node_modules)
@@ -28,7 +32,7 @@ nvm::env() {
         fs::remove_line_has_str "$profile" "# ZMICRO_NVM"
         fs::remove_line_has_str "$profile" "export NODE_HOME="
         fs::remove_line_has_str "$profile" "export NODE_USER_HOME="
-        fs::remove_line_has_str "$profile" "exportPATH=\$NODE_USER_HOME"
+        fs::remove_line_has_str "$profile" "export PATH=\$NODE_USER_HOME"
       fi
     fi
   done

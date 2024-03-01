@@ -3,9 +3,9 @@
 # nvm::exec enters a new shell with Node.js
 nvm::exec() {
   local version=$1
-  if [ -n "$version" ]; then
-    version=$(vm::version_ensure_prefix_v $version)
-    PLUGIN_NVM_NODE_HOME=$PLUGIN_NVM_VERSIONS/$version
+  if [ -z "$version" ]; then
+    log::error "[nvm::exec] version is required"
+    return 1
   fi
 
   which node >>/dev/null 2>&1

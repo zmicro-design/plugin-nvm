@@ -28,6 +28,9 @@ core() {
     fi
   fi
 
+  # fix prefix
+  version=$(vm::version_ensure_prefix_v $version)
+
   nvm::remove $version
 
   log::success "remove ${version} success"

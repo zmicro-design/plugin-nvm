@@ -14,6 +14,9 @@ core() {
   fi
 
   local version=$1
+  
+  # fix prefix
+  version=$(vm::version_ensure_prefix_v $version)
 
   if [ -z "$version" ]; then
     local availables=($(nvm::list))
