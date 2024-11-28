@@ -5,35 +5,35 @@ if [ "$(uname -s)" = "Darwin" ]; then
   export ZMICRO_DATA_PARENT=/opt
 fi
 
-export PLUGIN_XVM_DATA=${ZMICRO_DATA_PARENT}/data/plugins/nvm
-export PLUGIN_XVM_VERSIONS=${PLUGIN_XVM_DATA}/versions
-export PLUGIN_XVM_VERSION_CURRENT=${PLUGIN_XVM_DATA}/current
+export PLUGIN_NVM_DATA=${ZMICRO_DATA_PARENT}/data/plugins/nvm
+export PLUGIN_NVM_VERSIONS=${PLUGIN_NVM_DATA}/versions
+export PLUGIN_NVM_VERSION_CURRENT=${PLUGIN_NVM_DATA}/current
 
-version=""
+export PLUGIN_NVM_SOURCE_VERSION=""
 if [ -f "$PWD/.nvmrc" ]; then
-  version="$(cat $PWD/.nvmrc)"
+  PLUGIN_NVM_SOURCE_VERSION="$(cat $PWD/.nvmrc)"
 else
-  if [ -f "$PLUGIN_XVM_VERSION_CURRENT" ]; then
-    version="$(cat $PLUGIN_XVM_VERSION_CURRENT)"
+  if [ -f "$PLUGIN_NVM_VERSION_CURRENT" ]; then
+    PLUGIN_NVM_SOURCE_VERSION="$(cat $PLUGIN_NVM_VERSION_CURRENT)"
   fi
 fi
 
 # nvm
-if [ -z "$version" ]; then
+if [ -z "$PLUGIN_NVM_SOURCE_VERSION" ]; then
   export PLUGIN_NVM_NODE_DEFAULT_VERSION=v16.17.0
-  export version=$PLUGIN_NVM_NODE_DEFAULT_VERSION
+  export PLUGIN_NVM_SOURCE_VERSION=$PLUGIN_NVM_NODE_DEFAULT_VERSION
 fi
-if [ ! -d "$PLUGIN_XVM_VERSIONS/$version" ]; then
-  if [ -d "$PLUGIN_XVM_VERSIONS" ]; then
-    if [ -n "$(ls $PLUGIN_XVM_VERSIONS)" ]; then
-      version=$(ls $PLUGIN_XVM_VERSIONS | grep $version | sort -rV | head -n 1)
+if [ ! -d "$PLUGIN_NVM_VERSIONS/$PLUGIN_NVM_SOURCE_VERSION" ]; then
+  if [ -d "$PLUGIN_NVM_VERSIONS" ]; then
+    if [ -n "$(ls $PLUGIN_NVM_VERSIONS)" ]; then
+      PLUGIN_NVM_SOURCE_VERSION=$(ls $PLUGIN_NVM_VERSIONS | grep $PLUGIN_NVM_SOURCE_VERSION | sort -rV | head -n 1)
     fi
   fi
 fi
-export PLUGIN_NVM_NODE_CURRENT_VERSION=$version
+export PLUGIN_NVM_NODE_CURRENT_VERSION=$PLUGIN_NVM_SOURCE_VERSION
 
 # node
-export NODE_HOME=$PLUGIN_XVM_VERSIONS/$version
+export NODE_HOME=$PLUGIN_NVM_VERSIONS/$PLUGIN_NVM_SOURCE_VERSION
 export NODE_USER_HOME=$HOME/.node
 export PATH=$NODE_USER_HOME/bin:$NODE_HOME/bin:$PATH
 
