@@ -83,8 +83,8 @@ vm::version_parse() {
 vm::version_ensure_prefix_v() {
   local version=$1
   if [ -z "$version" ]; then
-    log::error "[vm::version_ensure_prefix_v] version is required"
-    exit 1
+    # log::error "[vm::version_ensure_prefix_v] version is required"
+    return 1
   fi
 
   if [ "$version" = "default" ]; then
