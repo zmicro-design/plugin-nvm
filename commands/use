@@ -14,6 +14,9 @@ core() {
   fi
 
   local version=$1
+  if [ -f ".nvmrc" ]; then
+    version=$(cat .nvmrc)
+  fi
   
   # fix prefix
   version=$(vm::version_ensure_prefix_v $version)
